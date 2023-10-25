@@ -1,0 +1,21 @@
+<h1>All Products Listing</h1>
+
+<% if @products.any? %>
+	<% @products.each do |product| %>
+		<%= link_to product_path(product) do %>
+		<br>
+		<li><%= product.name %></li>
+		<%end%>
+	<%end%>
+<%else%>
+	<p>No products. </p>
+<%end%>
+<br><br>
+
+<button><%= link_to "Add Product", new_product_path(@products)%></button>
+<br><br>
+
+<%= link_to 'Back', root_path %>
+
+
+

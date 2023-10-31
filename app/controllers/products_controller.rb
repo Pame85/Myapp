@@ -29,6 +29,10 @@ class ProductsController < ApplicationController
   
     def update
       @product.update(product_params)
+      if params[:product][:image].present?
+        @product.image.attach(params[:product][:image])
+      end
+    
       if @product.save
         redirect_to product_path(@product)
       else
@@ -49,7 +53,7 @@ class ProductsController < ApplicationController
       end
     
       def product_params
-        params.require(:product).permit(:name, :description, :price, :image)
+        params.require(:product).permit(:name, :description, :price, :content, images: [])
       end
   
 end

@@ -1,4 +1,21 @@
 <h1><%= @product.name %></h1>
+<% if @product.image.attached? %>
+  <% if @product.content.present? %>
+    <p><%= @product.content %></p>
+  <% end %>
+  <%= image_tag @product.image, class: "resized-image" %>
+<% elsif @product.images.any? %>
+  <div class="image-gallery">
+    <% @product.images.each do |image| %>
+      <%= image_tag image, class: "resized-image" %>
+    <% end %>
+  </div>
+<% else %>
+  <p>No image available</p>
+<% end %>
+  
+
+
 <p><strong>Description:</strong> <%= @product.description %></p>
 <p><strong>Price:</strong> <%= number_to_currency(@product.price) %></p>
 

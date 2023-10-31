@@ -37,18 +37,20 @@ class ProductsController < ApplicationController
     end
 
     def destroy
+      @product = Product.find(params[:id])
       @product.destroy
-      redirect_to root_path, notice: 'Product was successfully deleted.'
+
+      redirect_to products_path, notice: 'Product was successfully deleted.'
     end
 
     private
+      def set_product
+        @product = Product.find(params[:id])
+      end
+    
+      def product_params
+        params.require(:product).permit(:name, :description, :price, :image)
+      end
   
-    def set_product
-      @product = Product.find(params[:id])
-    end
-  
-    def product_params
-      params.require(:product).permit(:name, :description, :price)
-    end
 end
   

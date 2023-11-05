@@ -1,8 +1,19 @@
 class ApplicationController < ActionController::Base
-    before_action :authenticate_user!, only: [:secure_action]
+  helper_method :current_order  
+
+  def current_order
+    @current_order ||= find_or_create_order
+  end
+
     
-    def secure_action
-      # Action accessible only to authenticated users
+  private
+
+  def find_or_create_order
+    if current_user.orders.any?
+      current_user.orders.last
+    else
+      current_user.orders.create
     end
   end
+end
   

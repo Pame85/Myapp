@@ -47,6 +47,13 @@ class ProductsController < ApplicationController
       redirect_to products_path, notice: 'Product was successfully deleted.'
     end
 
+    def add_to_cart
+      @product = Product.find(params[:id])
+      line_item = current_user.line_items.build(product_id: @product.id, quantity: 1)
+      line_item.save
+      redirect_to cart_path, notice: "Product added to cart successfully."
+    end
+
     private
       def set_product
         @product = Product.find(params[:id])

@@ -1,20 +1,24 @@
 class OrdersController < ApplicationController
-    def create
-        @order = Order.new(order_params)
-        if @order.save
-          @product = Product.find(params[:order][:product_id])
-          @product.update(order_id: @order.id)
-          flash[:success] = "Successed to place the order."
-          redirect_to products_path
-        else
-          flash[:error] = "Failed to place the order."
-          redirect_to root_path
-        end
+  def new
+    @pre_order = PreOrder.new
+  end
+
+  def create
+    @pre_order = PreOrder.new(pre_order_params)
+    if @pre_order.save
+      redirect_to order_path(@pre_order)
+    else
+      render :new
     end
-  
-    private
-  
-    def order_params
-      params.require(:order).permit(:product_id)
-    end
+  end
+
+  def show
+    @pre_order = PreOrder.find(params[:id])
+  end
+
+  private
+
+  def pre_order_params
+    params.require(:pre_order).permit(:name, :email, :product_id, :quantity)
+  end
 end

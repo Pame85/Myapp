@@ -1,0 +1,7 @@
+<h1>Cart</h1>
+   <% @line_items.each do |line_item| %>
+     <p><%= line_item.product.name %> - Quantity: <%= line_item.quantity %> - Price: <%= line_item.price %></p>
+   <% end %>
+   <p>Total Price: <%= @total_price %></p>
+
+   <%= link_to 'Back', root_path %>
